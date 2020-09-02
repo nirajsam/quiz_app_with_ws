@@ -43,7 +43,7 @@ export default function AddQuestion() {
                 ar.push(response.data[index].testName)
             }
             settest(ar)
-            //sessionStorage.setItem('test',JSON.stringify(response.data.testName))
+            
             console.log(this.state.test)
             
         }).catch((error)=>{
