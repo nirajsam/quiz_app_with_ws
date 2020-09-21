@@ -1,4 +1,4 @@
 module.exports={
-    MONGODB_URL: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/quizApp',
+    MONGODB_URL: 'mongodb+srv://mongoUser:Niraj1997@cluster0.kt5yz.mongodb.net/quiz?retryWrites=true&w=majority',
     JWT_SECRET: process.env.JWT_SECRET || 'somethingsecret',
 }

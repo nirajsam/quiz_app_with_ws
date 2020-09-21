@@ -5,10 +5,11 @@ import {register } from '../actions/userActions';
 
 function RegisterScreen(props){
 
+    const [hidden, sethidden] = useState(true)
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword]=useState('');
-    const [rePassword, setRePassword]=useState('');
+    // const [rePassword, setRePassword]=useState('');
     const userRegister = useSelector(state=>state.userRegister);
     const {loading, userInfo, error}= userRegister;
     const dispatch = useDispatch();
@@ -46,13 +47,17 @@ function RegisterScreen(props){
                     <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)}></input>
                 </li>
                 <li>
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" onChange={(e)=>setPassword(e.target.value)}></input>
+                <div className="input-icons ">
+                    <label htmlFor="password">Password</label>&nbsp;
+                    <i style={{cursor:"pointer",position:"absolute"}} className="mdi mdi-eye" onClick={()=>{return sethidden(!hidden)}}></i>
+                    <input type={hidden ? 'password' : 'text'} id="password"   name="password" onChange={(e)=>setPassword(e.target.value)}/>
+                    
+                    </div>
                 </li>
-                <li>
+                {/* <li>
                     <label htmlFor="rePassword">Re-enter Password</label>
                     <input type="password" id="rePassword" name="rePassword" onChange={(e)=>setRePassword(e.target.value)}></input>
-                </li>
+                </li> */}
                 <li>
                     <button type="submit" className="button primary full-width">Register</button>
                 </li>

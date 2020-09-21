@@ -2,6 +2,13 @@ html{
   font-size: 62.5%;  
   box-sizing: border-box;
 }
+@media (max-width: 768px) {
+  html{
+    font-size: 45%;  
+    box-sizing: border-box;
+  }
+ }
+
 body{
   font:1.6rem Helvetica;
   height:100vh;

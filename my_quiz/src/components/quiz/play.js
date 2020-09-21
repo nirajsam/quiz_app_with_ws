@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Helmet } from 'react-helmet'
-import questions from '../../questions.json'
+// import questions from '../../questions.json'
 import isEmpty from '../../utils/is-empty'
 import M from 'materialize-css'
 import classnames from 'materialize-css'
