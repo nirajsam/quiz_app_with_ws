@@ -10,7 +10,7 @@ const resultRoute = require('./routes/resultRoutes')
 // const commentRoute = require('./routes/commentRoute')
 // const rateRoute = require('./routes/rateRoute')
 // const upload = require('express-fileupload')
-const PORT=process.env.port || 5000;
+const port=process.env.PORT || 5000;
 
 dotenv.config();
 
@@ -64,6 +64,6 @@ app.use("/api/results",resultRoute);
 //  })
  
 
-app.listen(PORT, ()=>{
+app.listen(port,'0.0.0.0', ()=>{
     console.log("server started")
 })
