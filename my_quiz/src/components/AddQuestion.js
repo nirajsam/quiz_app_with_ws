@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
@@ -13,6 +13,8 @@ export default function AddQuestion() {
     const [answer, setanswer] = useState("")
     const [qArray, setqArray] = useState([])
     const [test, settest] = useState([])
+    const [del, setdel] = useState('')
+    const [submit, setsubmit] = useState('')
     //const [file, setFile] = useState("")  
     
     const addToArray = () =>{
@@ -24,19 +26,20 @@ export default function AddQuestion() {
         "optionC":optC,"optionD":optD,"answer":answer}))
         
         setqArray(array)
+        
     }
 
     const submitArray = () => {
         console.log(qArray)
-        axios.post("http://localhost:5000/api/products",{"ar":(qArray),"name":tName,time:tTime}).then((response)=>{
+        axios.post("https://niraj-quiz-app.herokuapp.com/api/products",{"ar":(qArray),"name":tName,time:tTime}).then((response)=>{
             console.log(response)
-            window.location.reload()
+            setsubmit('submitted')
         }).catch((error)=>{
             console.log(error)
         })
     }
     const showTestAvailable=()=>{
-        axios.get("http://localhost:5000/api/products/fetch/tests").then((response)=>{
+        axios.get("https://niraj-quiz-app.herokuapp.com/api/products/fetch/tests").then((response)=>{
             console.log(response.data)
             let ar=[];
             for (let index = 0; index < response.data.length; index++) {
@@ -52,15 +55,16 @@ export default function AddQuestion() {
     }
     const deleteTestAvailable=(test)=>{
         if(window.confirm("are you sure want to delete this test ??")){
-            axios.delete(`http://localhost:5000/api/products/${test}`).then((response)=>{
+            axios.delete(`https://niraj-quiz-app.herokuapp.com/api/products/${test}`).then((response)=>{
             console.log(test,"deleted")
-            window.location.reload()
+            setdel('deleted')
         }).catch((error)=>{
             console.log(error)
         })
         }
         
     }
+    
     return (
          <div className="row">
         <div className="col-md-9" style={{margin:"1% 0% 0% 0% "}}>
@@ -115,11 +119,12 @@ export default function AddQuestion() {
                 <button type="button" className="btn btn-primary" onClick={addToArray}>add to array</button><br/><br/>
                 <button type="button" className="btn btn-primary" onClick={submitArray}>  submit</button>
             </div>
+            <span className="text-success">{submit}</span>
             <p className="col-md-4">{qArray}</p>
             
         </div>
         <div className="col-md-3 " style={{marginTop:"10%"}} >
-                <div><button  onClick={showTestAvailable}>delete tests</button></div>
+                <div><button  onClick={showTestAvailable}>delete tests</button></div><span className="text-success">{del}</span>
                 <div><br/>
                 <ul>
                     {test.map((test)=>{

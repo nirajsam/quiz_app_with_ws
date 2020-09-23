@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import Home from './components/Home';
 import QuizInstructions from './components/quiz/QuizInstruction';
 import play from './components/quiz/play';
@@ -24,6 +24,7 @@ function App() {
       <Route  path="/register" exact component={RegisterScreen} />
       <Route  path="/addQuestion" exact component={userInfo?userInfo.isAdmin?AddQuestion:Home:Home} />
       <Route  path="/results" exact component={userInfo?userInfo.isAdmin?ResultShow:Home:Home} />
+      {/* <Route path="*" exact={true}><Redirect to="/"></Redirect></Route> */}
     </Router>
   );
 }

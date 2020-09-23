@@ -27,7 +27,7 @@ function SigninScreen(props){
     }
     return <div className="form">
         <form onSubmit={submitHandler}>
-            <ul className="form-container">
+            <ul className="form-container jumbotron">
                 <li>
                     <h2>Sign-In</h2>
                 </li>
@@ -44,13 +44,13 @@ function SigninScreen(props){
                     <input type="password" id="password" name="password" onChange={(e)=>setPassword(e.target.value)}></input>
                 </li>
                 <li>
-                    <button type="submit" className="button primary full-width">Signin</button>
+                    <button type="submit" className="button primary full-width" style={{backgroundColor:"blue",color:"white"}}>Signin</button>
                 </li>
                 <li>
-                    New to amazona?
+                    New to this quiz app?
                 </li>
                 <li>
-                    <Link to={redirect === "/" ? "register" : "register?redirect="+redirect} className="button secondary text-center">Create your amazona account</Link>
+                    <Link to={redirect === "/" ? "register" : "register?redirect="+redirect} className="button secondary text-center" >Create your account</Link>
                 </li>
             </ul>
         </form>

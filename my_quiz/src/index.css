@@ -129,9 +129,14 @@ input{
   border:.1rem #c0c0c0 solid;
   border-radius: .5rem;
 }
-
+.form{
+  background-image: url('https://thumbs.dreamstime.com/b/vector-realistic-isolated-neon-sign-quiz-logo-template-decoration-covering-wall-background-vector-realistic-193998386.jpg');
+}
+#reg{
+  background-color: rgba(209, 198, 198, 0.7);
+}
 #home{
-  background-image: url('https://as2.ftcdn.net/jpg/00/62/78/37/500_F_62783774_by3HNn86EitV0MhVzlsYEHsMgbDdhg48.jpg');
+  background-image: url('https://thumbs.dreamstime.com/b/vector-realistic-isolated-neon-sign-quiz-logo-template-decoration-covering-wall-background-vector-realistic-193998386.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -140,7 +145,7 @@ input{
   width: 100%;
 }
 section{
-  background-color: rgba(63, 5, 5, 0.7);
+  background-color: rgba(209, 198, 198, 0.7);
   padding-left:2rem ;
   padding-right: 2rem;
   height: 80%;

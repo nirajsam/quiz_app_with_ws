@@ -1,29 +1,41 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react'
+import { Link, Redirect } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import Cookie from 'js-cookie';
 import {useSelector} from 'react-redux';
 
 var user=(Cookie.get('userInfo'))
-const logOut = () =>{
-    if(window.confirm("want to logout??")){
-      Cookie.remove('userInfo')
-      window.location.reload()
-    }
-    
-  }
-const Home = () => {
-    
+
+const Home = (props) => {
+    const [out, setout] = React.useState('')
     const userSignin = useSelector(state=>state.userSignin);
     const {loading, userInfo, error}= userSignin;
+    const logOut = (props) =>{
+        if(window.confirm("want to logout??")){
+          Cookie.remove('userInfo')
+          window.location.reload()
+        }
+        
+      }
+      const redirect = props.location.search?props.location.search.split("=")[1]:'/';
+      //console.log(userInfo)
+      useEffect(() => {
+          if(userInfo){
+              props.history.push(redirect)
+          }
+          return () => {
+              //
+          }
+      }, [userInfo]);
+    
     return(<Fragment>
         <Helmet><title>Quiz App - Home</title></Helmet>
-        <div id="home">
+        <div id="home" style={{paddingTop:"10%"}}>
             <section>
                 <div style={{textAlign:"center"}}>
-                    <span className="mdi mdi-school cube"></span>
+                    <span style={{color:"black"}} className="mdi mdi-school cube"></span>
                 </div>
-                <h1>Quiz-App</h1>
+                <h1 style={{color:"black"}}>Niraj's Quiz-App</h1>
                 
                 <div className="play-button-container">
                     <ul>
@@ -31,8 +43,9 @@ const Home = () => {
                     </ul>
                 </div>
                 <div className="auth-container">
-                    <Link to={!userInfo?"/login":"/"} className="auth-buttons" id="login-button">{!userInfo?"Login":<span onClick={logOut}>Logout</span>} </Link>
-                    <Link to="/register" className="auth-buttons" id="signup-button">Register</Link>
+                    {userInfo?<button className="auth-buttons" onClick={logOut} style={{backgroundColor:"red"}}>Logout</button>:
+                    <Link to={"/login"} className="auth-buttons" id="login-button" >Login</Link>}
+                    <Link to={!userInfo?`/register`:'/'} className="auth-buttons" id="signup-button" >Register</Link>
                 </div>
                 <br/><br/>
                 <div className="auth-container">

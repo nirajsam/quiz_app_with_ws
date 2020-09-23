@@ -17,7 +17,7 @@ function RegisterScreen(props){
 
     useEffect(() => {
         if(userInfo){
-            props.history.push(redirect)
+            props.history.push('/login')
         }
         return () => {
             //
@@ -29,10 +29,10 @@ function RegisterScreen(props){
         dispatch(register(name, email,password));
     }
     return <div className="form">
-        <form onSubmit={submitHandler}>
-            <ul className="form-container">
+        <form onSubmit={submitHandler} >
+            <ul className="form-container jumbotron">
                 <li>
-                    <h2>Create Account</h2>
+                    <h2><b>Create Account</b></h2>
                 </li>
                 <li>
                     {loading && <div>Loading...</div>}
@@ -59,7 +59,7 @@ function RegisterScreen(props){
                     <input type="password" id="rePassword" name="rePassword" onChange={(e)=>setRePassword(e.target.value)}></input>
                 </li> */}
                 <li>
-                    <button type="submit" className="button primary full-width">Register</button>
+                    <button type="submit" className="button primary full-width" style={{backgroundColor:"blue",color:"white"}}>Register</button>
                 </li>
                 <li>
                     Already have an account ? <Link to={redirect === "/" ? "login" : "signin?redirect=" + redirect} className="button secondary text-center" >Sign-In</Link>

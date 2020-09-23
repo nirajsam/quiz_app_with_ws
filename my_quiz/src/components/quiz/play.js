@@ -42,11 +42,18 @@ class play extends Component {
             previousButtonDisabled:true,
             nextButtonDisabled:false,
             FiftyFiftyUsed:0,
-            hintsUsed:0
+            hintsUsed:0,
+            load:false
         };
         this.interval=null;
+        this.qAr=[]
     }
-    componentDidMount () {
+    
+    load = () => {
+        this.setState({load:true});
+        this.loadQuestions();
+    }
+    loadQuestions= ()=> {
         
         const {questions, currentQuestion, nextQuestion, previousQuestion}=this.state;
         this.displayQuestions(questions,currentQuestion,nextQuestion,previousQuestion)
@@ -57,13 +64,13 @@ class play extends Component {
         Cookie.set('tName',this.props.match.params.test)
         console.log(this.props.match.params.test)
         clearInterval(this.interval)
-        axios.get(`http://localhost:5000/api/products/${this.props.match.params.test}`).then((response)=>{
+        axios.get(`https://niraj-quiz-app.herokuapp.com/api/products/${this.props.match.params.test}`).then((response)=>{
             //console.log(response)
             //this.setState({"questions":(response.data[0].question)})
            
             sessionStorage.setItem('ques',JSON.stringify(response.data[0].question))
             sessionStorage.setItem('time',JSON.stringify(response.data[0].testTime))
-            
+            this.setState({questions:response.data[0].question})
             // console.log(this.state.questions)
             // console.log(sessionStorage.getItem('ques'))
             
@@ -103,6 +110,7 @@ class play extends Component {
 
     handleOptionClick = (e) => {
         if(e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()){
+            
             setTimeout(() => {
                 // document.getElementById("correct-sound").play()
             }, 500);
@@ -165,9 +173,12 @@ class play extends Component {
         //     classes: 'toast-valid',
         //     displayLength:1500
         // })
+        
+        if(this.qAr.includes(this.state.currentQuestion.question)){
+            console.log("p")
         this.setState(prevState => ({
-            score:prevState.score+1,
-            correctAnswers:prevState.correctAnswers+1,
+            // score:prevState.score+1,
+            // correctAnswers:prevState.correctAnswers+1,
             currentQuestionIndex:prevState.currentQuestionIndex+1,
             numberOfAnsweredQuestions:prevState.numberOfAnsweredQuestions+1
         }),()=>{
@@ -178,7 +189,24 @@ class play extends Component {
                 this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
             }
             
-        })
+        })}else{
+            this.setState(prevState => ({
+                score:prevState.score+1,
+                correctAnswers:prevState.correctAnswers+1,
+                currentQuestionIndex:prevState.currentQuestionIndex+1,
+                numberOfAnsweredQuestions:prevState.numberOfAnsweredQuestions+1
+            }),()=>{
+                if(this.state.nextQuestion === undefined){
+                    // this.endGame()
+                    
+                }else{
+                    this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+                }
+                
+            })
+            this.qAr.push(this.state.currentQuestion.question)
+            console.log(this.qAr)
+        }
     }
     wrongAnswer = () => {
         // navigator.vibrate(1000);
@@ -187,17 +215,31 @@ class play extends Component {
         //     classes: 'toast-invalid',
         //     displayLength:1500
         // })
+        if(this.qAr.includes(this.state.currentQuestion.question)){
         this.setState(prevState => ({
-            wrongAnswers:prevState.wrongAnswers+1,
+            // wrongAnswers:prevState.wrongAnswers+1,
             currentQuestionIndex:prevState.currentQuestionIndex+1,
             numberOfAnsweredQuestions:prevState.numberOfAnsweredQuestions
         }),() => {
             if(this.state.nextQuestion === undefined){
-                this.endGame()
+                // this.endGame()
             }else{
                 this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
             }
-        })
+        })}else{
+            this.setState(prevState => ({
+                wrongAnswers:prevState.wrongAnswers+1,
+                currentQuestionIndex:prevState.currentQuestionIndex+1,
+                numberOfAnsweredQuestions:prevState.numberOfAnsweredQuestions
+            }),() => {
+                if(this.state.nextQuestion === undefined){
+                    // this.endGame()
+                }else{
+                    this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+                }
+            })
+            this.qAr.push(this.state.currentQuestion.question)
+        }
     }
     showOptions = () => {
         const options = Array.from(document.querySelectorAll('.option'));
@@ -351,10 +393,23 @@ class play extends Component {
     }
     render() {
         const {currentQuestion,currentQuestionIndex,numberOfQuestions, hints, fiftyFifty, time}=this.state;
+        if(!this.state.load){
+            return <div className="">
+                <h2>How To play the Game</h2>
+                        <p>Ensure you read guidelines properly:</p>
+                        <ul className="browser-default" id="min-list">
+                            <li>Each Question consist of four answer</li>
+                            <li>only one correct answer among all four</li>
+                            <li>No negative marks</li>
+                            <li>you can not change your answer once you marked, so mark wisely</li>
+                            <li>then click on start button to load questions and options</li>
+                        </ul><br></br><br></br>
+                <div className="center"><button className="btn btn-primary" style={{backgroundColor:"blue"}} onClick={()=>{return this.load()}}>Start</button></div></div>
+        }else{
         return (
             <Fragment>
                 <Helmet><title>Quiz-page</title></Helmet>
-                <div className="center"><button className="btn btn-primary" onClick={()=>{window.location.reload()}}>load</button></div>
+                
                 <Fragment>
                     <audio id="correct-sound" src={correctNotf}></audio>
                     <audio id="error-sound" src={errorNotf}></audio>
@@ -362,8 +417,17 @@ class play extends Component {
                 </Fragment>
                 <div className="questions">
                     <h2>Quiz Mode</h2>
+                    <div className="center">
+                    {this.state.questions.map((q,index)=>{
+                        if(this.qAr.includes(q.question)){
+                            return <button id={`${q.question}`}  style={{borderRadius:"50%", height:"30px",width:"30px",backgroundColor:"blue",color:"white"}}>{index+1}</button>
+                        }else{
+                            return <button id={`${q.question}`}  style={{borderRadius:"50%", height:"30px",width:"30px"}}>{index+1}</button>
+                        }
+                        })}
+                    </div>
                     <div className="lifeline-container">
-                        <p>
+                        {/* <p>
                             <span onClick={this.handleFiftyFifty} className="mdi mdi-set-center mdi-24px lifeline-icon">
                             <span className="lifeline">{fiftyFifty}</span>
                             </span>
@@ -372,7 +436,7 @@ class play extends Component {
                             <span onClick={this.handleHints} className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon">
                             <span className="lifeline">{hints}</span>
                             </span>
-                        </p>
+                        </p> */}
                     </div>
                     <div>
                         <p>
@@ -397,7 +461,7 @@ class play extends Component {
                     <button id="submit-button" className="btn btn-danger btn-lg right" style={{backgroundColor:"red",color:"white"}} onClick={this.endGame}>submit</button>
                 </div>
             </Fragment>
-        )
+        )}
     }
 }
 export default play;

@@ -6,11 +6,11 @@ export default class ResultShow extends Component {
     constructor(props){
         super(props);
         this.state={
-            result:[]
+            result:[],
         }
     }
     componentWillMount(){
-        Axios.get("http://localhost:5000/api/results").then((response)=>{
+        Axios.get("https://niraj-quiz-app.herokuapp.com/api/results").then((response)=>{
             console.log(response.data)
             this.setState({result:response.data})
         }).catch((error)=>{
@@ -18,12 +18,15 @@ export default class ResultShow extends Component {
         })
     }
     deleteResult=(email,tName)=>{
-        Axios.delete(`http://localhost:5000/api/results/${email}/${tName}`).then((response)=>{
+        if(window.confirm("want to delete??")){
+            Axios.delete(`https://niraj-quiz-app.herokuapp.com/api/results/${email}/${tName}`).then((response)=>{
             console.log("deleted")
             
         }).catch((error)=>{
             console.log(error)
         })
+          }
+        
     }
     render() {
         return (
@@ -39,11 +42,11 @@ export default class ResultShow extends Component {
                     <th>test Name</th>
                     <th>Score</th>
                     <th>No of question</th>
-                    <th>answered question</th>
+                    {/* <th>answered question</th> */}
                     <th>correct</th>
                     <th>wrong</th>
-                    <th>used hints</th>
-                    <th>fifty fifty used</th>
+                    {/* <th>used hints</th>
+                    <th>fifty fifty used</th> */}
                     <th>delete</th>
                 </tr>
                 </thead>
@@ -56,11 +59,11 @@ export default class ResultShow extends Component {
                             <td>{res.testName}</td>
                             <td>{res.score}</td>
                             <td>{res.numberOfQuestion}</td>
-                            <td>{res.numberOfAnsweredQuestion}</td>
+                            {/* <td>{res.numberOfAnsweredQuestion}</td> */}
                             <td>{res.correctAnswer}</td>
                             <td>{res.wrongAnswer}</td>
-                            <td>{res.usedHints}</td>
-                            <td>{res.fiftyFiftyUsed}</td>
+                            {/* <td>{res.usedHints}</td> */}
+                            {/* <td>{res.fiftyFiftyUsed}</td> */}
                             <td onClick={()=>{return this.deleteResult(res.email,res.testName)}}><span className="mdi mdi-delete"></span></td>
                         </tr>
                     ) 

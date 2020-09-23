@@ -30,13 +30,13 @@ class quizSummary extends Component {
             usedHints:state.hintsUsed,
             fiftyFiftyUsed:state.FiftyFiftyUsed
         }) 
-         
+        
     }
     componentDidUpdate(){
         this.saveResult()
     }
     saveResult(){
-        Axios.post("http://localhost:5000/api/results",{tName:Cookie.get('tName'),name:JSON.parse(Cookie.get('userInfo')).name
+        Axios.post("https://niraj-quiz-app.herokuapp.com/api/results",{tName:Cookie.get('tName'),name:JSON.parse(Cookie.get('userInfo')).name
         ,email:JSON.parse(Cookie.get('userInfo')).email,
         score:this.state.score,nOfQ:this.state.numberOfQuestion,nOfAQ:
         this.state.numberOfAnsweredQuestion,cA:this.state.correctAnswer,wA:this.state.wrongAnswer,uH:
@@ -75,20 +75,20 @@ class quizSummary extends Component {
                         <span className="stat left">Total number of questions</span>
                         <span className="right">{this.state.numberOfQuestion}</span><br/>
 
-                        <span className="stat left">number of Answered questions</span>
-                        <span className="right">{this.state.numberOfAnsweredQuestion}</span><br/>
+                        {/* <span className="stat left">number of Answered questions</span>
+                        <span className="right">{this.state.numberOfAnsweredQuestion}</span><br/> */}
 
                         <span className="stat left">number of correct answers</span>
                         <span className="right">{this.state.correctAnswer}</span><br/>
 
                         <span className="stat left">number of wrong answers</span>
                         <span className="right">{this.state.wrongAnswer}</span><br/>
-
+{/* 
                         <span className="stat left">number of used hints</span>
                         <span className="right">{this.state.usedHints}</span><br/>
 
                         <span className="stat left">number of used fifty fifty</span>
-                        <span className="right">{this.state.fiftyFiftyUsed}</span><br/>
+                        <span className="right">{this.state.fiftyFiftyUsed}</span><br/> */}
                     </div>
                     <div className="center">
                         <ul>
