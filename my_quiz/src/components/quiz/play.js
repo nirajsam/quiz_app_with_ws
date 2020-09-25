@@ -137,6 +137,13 @@ class play extends Component {
                 break;
         }
     }
+    jumpToQuestion=(x)=>{
+        this.setState(prevState=>({
+            currentQuestionIndex:x
+        }),()=>{
+            this.displayQuestions(this.state.state,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion);
+        })
+    }
     handleNextButtonClick = () => {
         this.playButtonSound();
         if(this.state.nextQuestion !== undefined){
@@ -420,9 +427,11 @@ class play extends Component {
                     <div className="center">
                     {this.state.questions.map((q,index)=>{
                         if(this.qAr.includes(q.question)){
-                            return <button id={`${q.question}`}  style={{borderRadius:"50%", height:"30px",width:"30px",backgroundColor:"blue",color:"white"}}>{index+1}</button>
+                            return <button id={`${q.question}`}  style={{borderRadius:"50%", height:"30px",width:"30px",backgroundColor:"blue",color:"white"}}
+                                >{index+1}</button>
                         }else{
-                            return <button id={`${q.question}`}  style={{borderRadius:"50%", height:"30px",width:"30px"}}>{index+1}</button>
+                            return <button id={`${q.question}`}  style={{borderRadius:"50%", height:"30px",width:"30px"}}
+                            onClick={()=>{return this.jumpToQuestion(index)}}>{index+1}</button>
                         }
                         })}
                     </div>

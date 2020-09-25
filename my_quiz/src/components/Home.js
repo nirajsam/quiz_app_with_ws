@@ -10,6 +10,12 @@ const Home = (props) => {
     const [out, setout] = React.useState('')
     const userSignin = useSelector(state=>state.userSignin);
     const {loading, userInfo, error}= userSignin;
+    
+    if(localStorage.getItem('hideItem')){
+        //
+    }else{
+        localStorage.setItem('hideItem',[])
+    }
     const logOut = (props) =>{
         if(window.confirm("want to logout??")){
           Cookie.remove('userInfo')

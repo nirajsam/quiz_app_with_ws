@@ -7,8 +7,11 @@ export default class QuizInstruction extends Component {
     constructor(props){
         super(props)
         this.state={
-            test:[]
+            test:[],
+            hide:false,
+            hideTestAr:[]
         }
+        var c=0
     }
 
     componentWillMount () {
@@ -21,11 +24,39 @@ export default class QuizInstruction extends Component {
             }
             this.setState({"test":(ar)})
             //sessionStorage.setItem('test',JSON.stringify(response.data.testName))
-            console.log(this.state.test)
+            // console.log(this.state.test)
             
         }).catch((error)=>{
             console.log(error)
         })
+        
+    }
+    hideTest=(x)=>{
+        
+        // console.log(localStorage.getItem('hideAr'))
+        // this.setState({hideTestAr:a})
+        // console.log(localStorage.getItem('hideAr'))
+        if(localStorage.getItem('hideAr')){
+            // console.log("n")
+            var a=localStorage.getItem('hideAr').split(',')
+            var ar=a;
+            if(!a.includes(x)){
+                ar.push(x)
+            }else if(a.includes(x)){
+                var index = ar.indexOf(x);
+                ar.splice(index, 1);
+            }}
+        else{
+            // console.log("k")
+            var ar=[]
+            ar.push(x)
+        }
+        
+        // this.setState({hideTestAr:ar})
+        localStorage.setItem('hideAr',ar)
+        // console.log((localStorage.getItem('hideAr')))
+        this.setState({hide:!this.state.hide})
+        
         
     }
     render() {
@@ -51,9 +82,22 @@ export default class QuizInstruction extends Component {
                         <div className="row jumbotron">
                         <span className="left" style={{fontSize:"40px"}}><>Available Tests</></span><br/><br/><hr/>
                         {this.state.test.map((test)=>{
-                                return <div className="col-md-2 center" style={{padding:"2%"}}><Link to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button className="btn btn-primary center "
-                                >{test}</button></Link><br/></div>
+                            if(localStorage.getItem('hideAr')){
+                                var a=localStorage.getItem('hideAr').split(',')
+                                // console.log(a)
+                                if(a.includes(test)){
+                                    return <div className="col-md-3 center" style={{padding:"2%"}}><Link  ><button className="btn btn-primary center "
+                                    disabled={true}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/></div>}
+                                else{
+                                    return <div className="col-md-3 center" style={{padding:"2%"}}><Link to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button className="btn btn-primary center "
+                                    disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/></div>
+                                }
+                            }else{
+                                return <div className="col-md-3 center" style={{padding:"2%"}}><Link to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button className="btn btn-primary center "
+                                disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/></div>
+                            }
                             })}</div>
+
                     </div>
                 </Fragment>
             </div>
