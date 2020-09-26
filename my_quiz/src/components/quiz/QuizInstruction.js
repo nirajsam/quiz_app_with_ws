@@ -3,26 +3,37 @@ import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Cookie from 'js-cookie';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+import cfg from '../../config.js'
+var URL=cfg.URL
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 export default class QuizInstruction extends Component {
     constructor(props){
         super(props)
         this.state={
             test:[],
             hide:false,
-            hideTestAr:[]
+            hideTestAr:[],
+            loading:true,
         }
         var c=0
     }
 
     componentWillMount () {
         clearInterval(this.interval)
-        axios.get("https://niraj-quiz-app.herokuapp.com/api/products/fetch/tests").then((response)=>{
+        axios.get(`${URL}/api/products/fetch/tests`).then((response)=>{
             console.log(response.data)
             let ar=[];
             for (let index = 0; index < response.data.length; index++) {
                 ar.push(response.data[index].testName)
             }
-            this.setState({"test":(ar)})
+            this.setState({test:(ar),loading:false})
             //sessionStorage.setItem('test',JSON.stringify(response.data.testName))
             // console.log(this.state.test)
             
@@ -81,7 +92,7 @@ export default class QuizInstruction extends Component {
                         </div><br/>
                         <div className="row jumbotron">
                         <span className="left" style={{fontSize:"40px"}}><>Available Tests</></span><br/><br/><hr/>
-                        {this.state.test.map((test)=>{
+                        {!this.state.loading?<div>{this.state.test.map((test)=>{
                             if(localStorage.getItem('hideAr')){
                                 var a=localStorage.getItem('hideAr').split(',')
                                 // console.log(a)
@@ -96,7 +107,15 @@ export default class QuizInstruction extends Component {
                                 return <div className="col-md-3 center" style={{padding:"2%"}}><Link to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button className="btn btn-primary center "
                                 disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/></div>
                             }
-                            })}</div>
+                            })}</div>:<div className="sweet-loading">
+                            <ClipLoader
+                              css={override}
+                              size={150}
+                              color={"#123abc"}
+                              loading={this.state.loading}
+                            />loading...
+                          </div>}
+                        </div>
 
                     </div>
                 </Fragment>

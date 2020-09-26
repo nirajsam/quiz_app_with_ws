@@ -4,6 +4,7 @@ const resultSchema = new mongoose.Schema({
     testName:{ type: String,index: true, required: true},
     name:{ type: String,index: true, required: true},
     email: {type:String, required:true,index: true},
+    date:{type:String,required: true},
     score:{ type: Number,index: true, required: true},
     numberOfQuestion:{ type: Number,index: true, required: true},
     numberOfAnsweredQuestion:{ type: Number,index: true, required: true},

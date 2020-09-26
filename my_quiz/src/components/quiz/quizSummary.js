@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import Axios from 'axios';
 import Cookie from 'js-cookie';
-
+import cfg from '../../config.js'
+var URL=cfg.URL
 class quizSummary extends Component {
     constructor(props){
         super(props);
@@ -36,7 +37,7 @@ class quizSummary extends Component {
         this.saveResult()
     }
     saveResult(){
-        Axios.post("https://niraj-quiz-app.herokuapp.com/api/results",{tName:Cookie.get('tName'),name:JSON.parse(Cookie.get('userInfo')).name
+        Axios.post(`${URL}/api/results`,{tName:Cookie.get('tName'),name:JSON.parse(Cookie.get('userInfo')).name
         ,email:JSON.parse(Cookie.get('userInfo')).email,
         score:this.state.score,nOfQ:this.state.numberOfQuestion,nOfAQ:
         this.state.numberOfAnsweredQuestion,cA:this.state.correctAnswer,wA:this.state.wrongAnswer,uH:

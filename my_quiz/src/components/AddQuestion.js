@@ -1,6 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import cfg from '../config'
+var URL=cfg.URL
 
 export default function AddQuestion() {
     const [tName, settName] = useState("")
@@ -31,7 +33,7 @@ export default function AddQuestion() {
 
     const submitArray = () => {
         console.log(qArray)
-        axios.post("https://niraj-quiz-app.herokuapp.com/api/products",{"ar":(qArray),"name":tName,time:tTime}).then((response)=>{
+        axios.post(`${URL}/api/products`,{"ar":(qArray),"name":tName,time:tTime}).then((response)=>{
             console.log(response)
             setsubmit('submitted')
         }).catch((error)=>{
@@ -39,7 +41,7 @@ export default function AddQuestion() {
         })
     }
     const showTestAvailable=()=>{
-        axios.get("https://niraj-quiz-app.herokuapp.com/api/products/fetch/tests").then((response)=>{
+        axios.get(`${URL}/api/products/fetch/tests`).then((response)=>{
             console.log(response.data)
             let ar=[];
             for (let index = 0; index < response.data.length; index++) {
@@ -55,7 +57,7 @@ export default function AddQuestion() {
     }
     const deleteTestAvailable=(test)=>{
         if(window.confirm("are you sure want to delete this test ??")){
-            axios.delete(`https://niraj-quiz-app.herokuapp.com/api/products/${test}`).then((response)=>{
+            axios.delete(`${URL}/api/products/${test}`).then((response)=>{
             console.log(test,"deleted")
             setdel('deleted')
         }).catch((error)=>{

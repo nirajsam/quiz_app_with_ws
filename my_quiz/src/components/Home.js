@@ -11,6 +11,7 @@ const Home = (props) => {
     const userSignin = useSelector(state=>state.userSignin);
     const {loading, userInfo, error}= userSignin;
     
+    console.log(new Date().getHours(),new Date().getMinutes(),new Date().getSeconds())
     if(localStorage.getItem('hideItem')){
         //
     }else{

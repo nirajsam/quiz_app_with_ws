@@ -15,6 +15,8 @@ router.post('/', async (req, res) =>{
         testName:req.body.tName,
         name:req.body.name,
         email:req.body.email,
+        date:`${new Date().getDate()}/${new Date().getUTCMonth()}/${new Date().getUTCFullYear()},
+        ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
         score:req.body.score,
         numberOfQuestion:req.body.nOfQ,
         numberOfAnsweredQuestion:req.body.nOfAQ,

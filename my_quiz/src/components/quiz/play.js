@@ -2,13 +2,16 @@ import React, { Component, Fragment } from 'react'
 import { Helmet } from 'react-helmet'
 // import questions from '../../questions.json'
 import isEmpty from '../../utils/is-empty'
-import M from 'materialize-css'
-import classnames from 'materialize-css'
+// import M from 'materialize-css'
+// import classnames from 'materialize-css'
 import correctNotf from '../../assets/audio/success.mp3';
 import errorNotf from '../../assets/audio/error.mp3';
 import clickNotf from '../../assets/audio/click.mp3';
 import axios from 'axios'
 import Cookie from 'js-cookie';
+import cfg from '../../config.js'
+var URL=cfg.URL
+
 
 // axios.get("http://localhost:5000/api/products").then((response)=>{
 //     this.setState({"questions":JSON.stringify(response.data)})
@@ -64,7 +67,7 @@ class play extends Component {
         Cookie.set('tName',this.props.match.params.test)
         console.log(this.props.match.params.test)
         clearInterval(this.interval)
-        axios.get(`https://niraj-quiz-app.herokuapp.com/api/products/${this.props.match.params.test}`).then((response)=>{
+        axios.get(`${URL}/api/products/${this.props.match.params.test}`).then((response)=>{
             //console.log(response)
             //this.setState({"questions":(response.data[0].question)})
            

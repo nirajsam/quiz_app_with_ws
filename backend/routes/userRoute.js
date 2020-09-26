@@ -3,6 +3,13 @@ const User = require('../models/userModel')
 const router = express.Router();
 const  {getToken} = require('../util');
 
+router.get("/getUser", async(req,res)=>{
+    //console.log("sam")
+    const getUser = await User.find({});
+    res.send((getUser))
+    
+});
+
 router.post('/signin', async (req, res) =>{
     const signinUser = await User.findOne({
         email: req.body.email,
