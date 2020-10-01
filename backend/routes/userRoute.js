@@ -4,12 +4,13 @@ const router = express.Router();
 const  {getToken} = require('../util');
 
 router.get("/getUser", async(req,res)=>{
-    //console.log("sam")
+    // console.log("sam")
     const getUser = await User.find({});
     res.send((getUser))
     
 });
 
+// router.get("/:eamil", async (req, res) =>{})
 router.post('/signin', async (req, res) =>{
     const signinUser = await User.findOne({
         email: req.body.email,
@@ -21,6 +22,8 @@ router.post('/signin', async (req, res) =>{
             name:signinUser.name,
             email:signinUser.email,
             isAdmin:signinUser.isAdmin,
+            verify:signinUser.verify,
+            isTeacher:signinUser.isTeacher,
             token:getToken(signinUser)
         })
     }else{
@@ -31,6 +34,8 @@ router.post('/register', async (req, res) =>{
     const user = new User({
         name:req.body.name,
         email:req.body.email,
+        class:req.body.clas,
+        rollNo:req.body.roll,
         password:req.body.password
     });
     const newUser = await user.save()
@@ -46,6 +51,25 @@ router.post('/register', async (req, res) =>{
     }else{
         res.status(401).send({msg:'Invalid user data'})
     }
+})
+
+router.put("/vSt", async (req,res)=>{
+    var email=req.body.email
+    var name=req.body.name
+    var verify=req.body.verify
+    console.log(verify)
+    const verifyStudent = await User.updateOne({$and:[{email:email},{name:name}]},{$set:{verify:verify}});
+    res.send((verifyStudent))
+    console.log(verifyStudent)
+})
+router.put("/vTr", async (req,res)=>{
+    var email=req.body.email
+    var name=req.body.name
+    var isTeacher=req.body.isTeacher
+    
+    const verifyTeacher = await User.updateOne({$and:[{email:email},{name:name}]},{$set:{isTeacher:isTeacher}});
+    res.send((verifyTeacher))
+    console.log(verifyTeacher)
 })
 router.get("/createadmin", async (req,res)=>{
     try {

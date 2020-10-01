@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 const userRoute = require('./routes/userRoute');
 const productRoute = require('./routes/productRoute')
 const resultRoute = require('./routes/resultRoutes')
+const subQuesRoute=require('./routes/subQuesRoute')
+const subAnsRoute=require('./routes/subAnsRoute')
 // const commentRoute = require('./routes/commentRoute')
 // const rateRoute = require('./routes/rateRoute')
 // const upload = require('express-fileupload')
@@ -29,6 +31,8 @@ app.use(cors())
 // app.use(upload())
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
+app.use("/api/subQues", subQuesRoute);
+app.use("/api/subAns", subAnsRoute);
 app.use("/api/results",resultRoute);
 // app.use("/api/comment", commentRoute);
 // app.use("/api/rate", rateRoute);

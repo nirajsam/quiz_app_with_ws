@@ -23,10 +23,10 @@ const signin = (email,password) => async(dispatch) => {
     }
 }
 
-const register = (name, email,password) => async(dispatch) => {
-    dispatch({type:USER_REGISTER_REQUEST, payload:{name, email, password}});
+const register = (name, email, clas, roll, password) => async(dispatch) => {
+    dispatch({type:USER_REGISTER_REQUEST, payload:{name, email, clas, roll, password}});
     try {
-        const {data}  = await axios.post(`${URL}/api/users/register`, {name,email, password});
+        const {data}  = await axios.post(`${URL}/api/users/register`, {name, email, clas, roll, password});
         dispatch({type:USER_REGISTER_SUCCESS, payload:data});
         //Cookie.set('userInfo',JSON.stringify(data));
         

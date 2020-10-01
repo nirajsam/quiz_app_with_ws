@@ -8,6 +8,12 @@ router.get("/", async(req,res)=>{
     res.send((getResult))
     
 });
+router.get("/profile/:email", async(req,res)=>{
+    //console.log("sam")
+    const getResult = await Result.find({email:req.params.email});
+    res.send((getResult))
+    
+});
 
 router.post('/', async (req, res) =>{
     console.log(req.body.name)

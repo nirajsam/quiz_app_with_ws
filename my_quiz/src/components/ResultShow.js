@@ -8,7 +8,8 @@ export default class ResultShow extends Component {
         super(props);
         this.state={
             result:[],
-            search:''
+            search:'',
+            tNameSearch:''
         }
     }
     componentWillMount(){
@@ -35,9 +36,13 @@ export default class ResultShow extends Component {
             <div >        
         <div class="container">
         <h2>Result of students</h2>
-        <input type="text" placeholder="search by name" onChange={(e)=>{return this.setState({search:e.target.value})}}></input>
-        <p></p>            
-            <table class="table table-bordered">
+        <div>
+                <span className="col-md-6"><input type="text" placeholder="search by name" onChange={(e)=>{return this.setState({search:e.target.value})}}></input></span>
+                <span className="col-md-6"><input type="text" placeholder="search by testName" onChange={(e)=>{return this.setState({tNameSearch:e.target.value})}}></input></span>
+        </div>
+        <p></p>
+            <div className="table">            
+            <table className="table table-bordered">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -56,8 +61,8 @@ export default class ResultShow extends Component {
                 </thead>
                 <tbody>
                 {this.state.result.map((res)=>{
-                    if(this.state.search){
-                        if(this.state.search.toLowerCase()==res.name.toLowerCase()){
+                    if(this.state.tNameSearch && this.state.search){
+                        if(res.name.toLowerCase().match(this.state.search.toLowerCase()) && res.testName.toLowerCase().match(this.state.tNameSearch.toLowerCase())){
                             return <tr>
                             <td>{res.name}</td>
                             <td>{res.email}</td>
@@ -74,10 +79,13 @@ export default class ResultShow extends Component {
                         </tr>
                         }else{
                             //
-                        } 
-                    }else{
-                    return(
-                        <tr>
+                        }
+                    }
+                    else if(this.state.search){
+                        
+                        if(res.name.toLowerCase().match(this.state.search.toLowerCase())){
+                            
+                            return <tr>
                             <td>{res.name}</td>
                             <td>{res.email}</td>
                             <td>{res.date}</td>
@@ -91,11 +99,50 @@ export default class ResultShow extends Component {
                             {/* <td>{res.fiftyFiftyUsed}</td> */}
                             <td onClick={()=>{return this.deleteResult(res.email,res.testName)}}><span className="mdi mdi-delete"></span></td>
                         </tr>
-                    ) }
+                        }else{
+                            //
+                        }
+                    }else if(this.state.tNameSearch){
+                        if(res.testName.toLowerCase().match(this.state.tNameSearch.toLowerCase())){
+                            return <tr>
+                            <td>{res.name}</td>
+                            <td>{res.email}</td>
+                            <td>{res.date}</td>
+                            <td>{res.testName}</td>
+                            <td>{res.score}</td>
+                            <td>{res.numberOfQuestion}</td>
+                            {/* <td>{res.numberOfAnsweredQuestion}</td> */}
+                            <td>{res.correctAnswer}</td>
+                            <td>{res.wrongAnswer}</td>
+                            {/* <td>{res.usedHints}</td> */}
+                            {/* <td>{res.fiftyFiftyUsed}</td> */}
+                            <td onClick={()=>{return this.deleteResult(res.email,res.testName)}}><span className="mdi mdi-delete"></span></td>
+                        </tr>
+                        }else{
+                            //
+                        }
+                    }
+                    else{
+                        return <tr>
+                            <td>{res.name}</td>
+                            <td>{res.email}</td>
+                            <td>{res.date}</td>
+                            <td>{res.testName}</td>
+                            <td>{res.score}</td>
+                            <td>{res.numberOfQuestion}</td>
+                            {/* <td>{res.numberOfAnsweredQuestion}</td> */}
+                            <td>{res.correctAnswer}</td>
+                            <td>{res.wrongAnswer}</td>
+                            {/* <td>{res.usedHints}</td> */}
+                            {/* <td>{res.fiftyFiftyUsed}</td> */}
+                            <td onClick={()=>{return this.deleteResult(res.email,res.testName)}}><span className="mdi mdi-delete"></span></td>
+                        </tr>
+                    }
                 })}
+
                 
                 </tbody>
-            </table>
+            </table></div>
             </div>
             <div className="center"><Link to="/" ><button >Back Home</button></Link></div>
         </div>

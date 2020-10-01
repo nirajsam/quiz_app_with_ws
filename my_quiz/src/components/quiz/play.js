@@ -10,6 +10,7 @@ import clickNotf from '../../assets/audio/click.mp3';
 import axios from 'axios'
 import Cookie from 'js-cookie';
 import cfg from '../../config.js'
+import { Link } from 'react-router-dom';
 var URL=cfg.URL
 
 
@@ -405,16 +406,17 @@ class play extends Component {
         const {currentQuestion,currentQuestionIndex,numberOfQuestions, hints, fiftyFifty, time}=this.state;
         if(!this.state.load){
             return <div className="">
-                <h2>How To play the Game</h2>
-                        <p>Ensure you read guidelines properly:</p>
+                <h2>How To play the Game</h2><hr/>
+                        <p style={{fontSize:"20px"}}>Ensure you read guidelines properly:</p>
                         <ul className="browser-default" id="min-list">
-                            <li>Each Question consist of four answer</li>
-                            <li>only one correct answer among all four</li>
-                            <li>No negative marks</li>
-                            <li>you can not change your answer once you marked, so mark wisely</li>
-                            <li>then click on start button to load questions and options</li>
+                            <li className="left" style={{fontSize:"20px"}}>Each Question consist of four answer</li><br/><br/>
+                            <li className="left" style={{fontSize:"20px"}}>only one correct answer among all four</li><br/><br/>
+                            <li className="left" style={{fontSize:"20px"}}>No negative marks</li><br/><br/>
+                            <li className="left" style={{fontSize:"20px"}}>you can not change your answer once you marked, so mark wisely</li><br/><br/>
+                            <li className="left" style={{fontSize:"20px"}}>then click on start button to load questions and options</li><br/><br/>
                         </ul><br></br><br></br>
-                <div className="center"><button className="btn btn-primary" style={{backgroundColor:"blue"}} onClick={()=>{return this.load()}}>Start</button></div></div>
+                <div className="center"><button className="btn btn-primary" style={{backgroundColor:"blue"}} onClick={()=>{return this.load()}}>Start</button>
+                <br/><span className="left"><Link to="/play/instructions">No take me back</Link></span><br/></div></div>
         }else{
         return (
             <Fragment>

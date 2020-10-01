@@ -29,18 +29,18 @@ function SigninScreen(props){
         <form onSubmit={submitHandler}>
             <ul className="form-container jumbotron">
                 <li>
-                    <h2>Sign-In</h2>
+                    <h2 >Sign-In</h2>
                 </li>
                 <li>
                     {loading && <div>Loading...</div>}
                     {error && <div>{error}</div>}
                 </li>
                 <li>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email" style={{color:"black"}}>Email</label>
                     <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)}></input>
                 </li>
                 <li>
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password" style={{color:"black"}}>Password</label>
                     <input type="password" id="password" name="password" onChange={(e)=>setPassword(e.target.value)}></input>
                 </li>
                 <li>
