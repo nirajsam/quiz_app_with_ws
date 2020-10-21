@@ -468,11 +468,11 @@ class play extends Component {
                         <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionD}</p>
                     </div>
                     <div className="button-container">
-                        <button style={{backgroundColor:"blue",color:"white"}} id="prev-button" onClick={this.handleButtonClick} disabled={this.state.previousButtonDisabled}>previous</button>
+                        <button style={{backgroundColor:"green",color:"white"}} id="prev-button" onClick={this.handleButtonClick} disabled={this.state.previousButtonDisabled}>previous</button>
                         <button style={{backgroundColor:"green",color:"white"}}  id="next-button" onClick={this.handleButtonClick} disabled={this.state.nextButtonDisabled}>next</button>   
                     </div>
-                    <button id="quit-button" className="btn btn-warning" style={{backgroundColor:"yellow",color:"black"}} onClick={this.handleButtonClick}>quit</button>
-                    <button id="submit-button" className="btn btn-danger btn-lg right" style={{backgroundColor:"red",color:"white"}} onClick={this.endGame}>submit</button>
+                    <button id="quit-button" className="btn btn-warning" style={{backgroundColor:"#FFFF99",color:"black"}} onClick={this.handleButtonClick}>quit</button>
+                    <button id="submit-button" className="btn btn-danger btn-lg right" style={{backgroundColor:"blue",color:"white"}} onClick={this.endGame}>submit</button>
                 </div>
             </Fragment>
         )}

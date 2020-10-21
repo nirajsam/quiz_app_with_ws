@@ -22,12 +22,13 @@ export default class UserShow extends Component {
     }
     deleteResult=(email)=>{
         if(window.confirm("want to delete??")){
-            // Axios.delete(`${URL}/api/results/${email}/${tName}`).then((response)=>{
-            // console.log("deleted")
+            Axios.delete(`${URL}/api/users/${email}`).then((response)=>{
+            console.log("deleted")
+            alert("1 user deleted")
             
-        // }).catch((error)=>{
-        //     console.log(error)
-        // })
+        }).catch((error)=>{
+            console.log(error)
+        })
           }
         
     }

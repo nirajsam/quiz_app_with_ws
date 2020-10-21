@@ -45,7 +45,7 @@ router.post("/", async(req,res)=>{
 
 router.delete("/:test", async (req,res)=>{
     console.log(req.params.test)
-    const deleteProduct = await Question.deleteOne({testName:req.params.test});
+    const deleteProduct = await subQuestion.deleteOne({testName:req.params.test});
     console.log(deleteProduct)
     if(deleteProduct){
         

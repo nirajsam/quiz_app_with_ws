@@ -1,6 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import cfg from '../config'
+var URL=cfg.URL
 
 export default function AddSubQuestion() {
     const [tName, settName] = useState("")
@@ -30,7 +32,7 @@ export default function AddSubQuestion() {
 
     const submitArray = () => {
         console.log(qArray)
-        axios.post("http://localhost:5000/api/subQues",{"ar":(qArray),"name":tName,time:tTime}).then((response)=>{
+        axios.post(`${URL}/api/subQues`,{"ar":(qArray),"name":tName,time:tTime}).then((response)=>{
             console.log(response)
             setsubmit('submitted')
         }).catch((error)=>{
@@ -38,7 +40,7 @@ export default function AddSubQuestion() {
         })
     }
     const showTestAvailable=()=>{
-        axios.get("http://localhost:5000/api/subQues/fetch/tests").then((response)=>{
+        axios.get(`${URL}/api/subQues/fetch/tests`).then((response)=>{
             console.log(response.data)
             let ar=[];
             for (let index = 0; index < response.data.length; index++) {
@@ -54,7 +56,7 @@ export default function AddSubQuestion() {
     }
     const deleteTestAvailable=(test)=>{
         if(window.confirm("are you sure want to delete this test ??")){
-            axios.delete(`http://localhost:5000/api/subQues/${test}`).then((response)=>{
+            axios.delete(`${URL}/api/subQues/${test}`).then((response)=>{
             console.log(test,"deleted")
             setdel('deleted')
         }).catch((error)=>{

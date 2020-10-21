@@ -71,6 +71,16 @@ router.put("/vTr", async (req,res)=>{
     res.send((verifyTeacher))
     console.log(verifyTeacher)
 })
+router.delete("/:email", async (req,res)=>{
+    const deleteUser = await User.deleteOne({email:req.params.email});
+    console.log(deleteUser)
+    if(deleteUser){
+        
+        res.send({message:"user Deleted"});
+    } else {
+        res.send("Error in Deletion")
+    }
+})
 router.get("/createadmin", async (req,res)=>{
     try {
         const user = new User({
