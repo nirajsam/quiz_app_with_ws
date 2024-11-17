@@ -11,6 +11,7 @@ import axios from 'axios'
 import Cookie from 'js-cookie';
 import cfg from '../../config.js'
 import { Link } from 'react-router-dom';
+import Loader from 'react-spinners/ClipLoader.js';
 var URL=cfg.URL
 
 
@@ -47,7 +48,8 @@ class play extends Component {
             nextButtonDisabled:false,
             FiftyFiftyUsed:0,
             hintsUsed:0,
-            load:false
+            load:false,
+            loadingAiQuestion: false
         };
         this.interval=null;
         this.qAr=[]
@@ -68,6 +70,27 @@ class play extends Component {
         Cookie.set('tName',this.props.match.params.test)
         console.log(this.props.match.params.test)
         clearInterval(this.interval)
+        
+        if(this.props.match.params.test === 'ai'){
+            let examName = window.prompt('exam name')
+            let subject = window.prompt('subject name')
+            let noOfQues = window.prompt('no of question')
+            let time = window.prompt('time in minutes')
+            this.setState({loadingAiQuestion:true});
+            axios.post(`${URL}/api/products/ai`,{"examName":examName,"subject":subject,noOfQuest: noOfQues,time:time}).then((response)=>{
+                //console.log(response)
+                //this.setState({"questions":(response.data[0].question)})
+               
+                sessionStorage.setItem('ques',JSON.stringify(response.data[0].question))
+                sessionStorage.setItem('time',JSON.stringify(response.data[0].testTime))
+                this.setState({questions:response.data[0].question})
+                // console.log(this.state.questions)
+                // console.log(sessionStorage.getItem('ques'))
+                this.setState({loadingAiQuestion:false});
+            }).catch((error)=>{
+                console.log(error)
+            })
+        }
         axios.get(`${URL}/api/products/${this.props.match.params.test}`).then((response)=>{
             //console.log(response)
             //this.setState({"questions":(response.data[0].question)})
@@ -416,7 +439,9 @@ class play extends Component {
                             <li className="left" style={{fontSize:"20px"}}>then click on start button to load questions and options</li><br/><br/>
                         </ul><br></br><br></br>
                 <div className="center"><button className="btn btn-primary" style={{backgroundColor:"blue"}} onClick={()=>{return this.load()}}>Start</button>
-                <br/><span className="left"><Link to="/play/instructions">No take me back</Link></span><br/></div></div>
+                <br/><span className="left"><Link to="/play/instructions">No take me back</Link></span><br/></div>
+                {this.state.loadingAiQuestion? <div className='center'><Loader/>loading.. please wait for some time..</div>:null}
+                </div>
         }else{
         return (
             <Fragment>
@@ -474,6 +499,7 @@ class play extends Component {
                     <button id="quit-button" className="btn btn-warning" style={{backgroundColor:"#FFFF99",color:"black"}} onClick={this.handleButtonClick}>quit</button>
                     <button id="submit-button" className="btn btn-danger btn-lg right" style={{backgroundColor:"blue",color:"white"}} onClick={this.endGame}>submit</button>
                 </div>
+               
             </Fragment>
         )}
     }

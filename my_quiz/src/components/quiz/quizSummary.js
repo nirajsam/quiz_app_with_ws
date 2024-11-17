@@ -52,7 +52,7 @@ class quizSummary extends Component {
         const {state, score}= this;
         console.log(state.score)
         let stats,remark;
-        if(score<=30 || score==0){
+        if(state.score<=30){
             remark = 'You need to study hard'
         }else if(state.score>30 && state.score<=50){
             remark='Better luck next time'

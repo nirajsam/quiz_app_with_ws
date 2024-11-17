@@ -12,7 +12,7 @@ const subAnsRoute=require('./routes/subAnsRoute')
 // const commentRoute = require('./routes/commentRoute')
 // const rateRoute = require('./routes/rateRoute')
 // const upload = require('express-fileupload')
-const port=process.env.PORT || 5000;
+const port=process.env.PORT || 5001;
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ mongoose.connect(mongodbUrl, {
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true
-}).catch(error=>console.log(error.reason))
+}).catch(error=>console.log("mongo error",error))
 
 const cors=require('cors')
 const app=express();

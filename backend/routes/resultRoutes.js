@@ -16,8 +16,9 @@ router.get("/profile/:email", async(req,res)=>{
 });
 
 router.post('/', async (req, res) =>{
-    console.log(req.body.name)
-    const result = new Result({
+    try {
+        console.log(req.body.name)
+        const result = new Result({
         testName:req.body.tName,
         name:req.body.name,
         email:req.body.email,
@@ -31,14 +32,18 @@ router.post('/', async (req, res) =>{
         usedHints:req.body.uH,
         fiftyFiftyUsed:req.body.ffu,
         
-    });
-    const newResult = await result.save()
-    if(newResult){
-        res.send(newResult)
-    
-    }else{
-        res.status(401).send({msg:'saving error'})
+        });
+        const newResult = await result.save()
+        if(newResult){
+            res.send(newResult)
+        
+        }else{
+            res.status(401).send({msg:'saving error'})
+        }
+    } catch (error) {
+        res.status(404).send({msg:'unknown saving error'})   
     }
+    
 })
 router.delete("/:email/:tName", async (req,res)=>{
     console.log(req.params.email)

@@ -3,8 +3,9 @@ const User = require('../models/userModel')
 const router = express.Router();
 const  {getToken} = require('../util');
 
+
 router.get("/getUser", async(req,res)=>{
-    // console.log("sam")
+    console.log("sam---")
     const getUser = await User.find({});
     res.send((getUser))
     

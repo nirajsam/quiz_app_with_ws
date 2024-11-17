@@ -130,21 +130,24 @@ export default class QuizInstruction extends Component {
                         </div><br/>
                         <div className="row jumbotron inst">
                         <span className="left" style={{fontSize:"30px"}}><>Objective Tests</></span><br/><br/><hr/>
-                        {!this.state.loading?<div style={{margin:"5%"}}>{this.state.test.map((test)=>{
+                        
+                        {!this.state.loading?<div style={{display:'flex',flexDirection:'row', flexWrap:'wrap',margin:"1%"}} className='col'><div className="center" style={{padding:"1%"}} ><Link  to={Cookie.get('userInfo')?`/play/quiz/ai`:'/login'} ><button  className="btn btn-primary center "
+                                >ai</button></Link></div>{this.state.test.map((test)=>{
                             if(localStorage.getItem('hideAr')){
                                 var a=localStorage.getItem('hideAr').split(',')
                                 // console.log(a)
                                 if(a.includes(test)){
-                                    return <div className="col-md-2 col-xs-6 center" style={{padding:".5%"}}><Link  ><button  className="btn btn-primary center "
+                                    return <div className=" left" style={{padding:"1%"}}><Link  ><button  className="btn btn-primary center "
                                     disabled={true}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/>&nbsp;&nbsp;</div>}
                                 else{
-                                    return <div className="col-md-2 col-xs-6 center" style={{padding:".5%"}}><Link to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button  className="btn btn-primary center "
+                                    return <div className=" left" style={{padding:"1%"}}><Link to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button  className="btn btn-primary center "
                                     disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/>&nbsp;&nbsp;</div>
                                 }
                             }else{
-                                return <div className="col-md-2 col-xs-6 center" style={{padding:".5%"}} ><Link  to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button  className="btn btn-primary center "
+                                return <div className=" left" style={{padding:"1%"}} ><Link  to={Cookie.get('userInfo')?`/play/quiz/${test}`:'/login'} ><button  className="btn btn-primary center "
                                 disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideTest(test)}}></div>:null}<br/>&nbsp;&nbsp;</div>
                             }
+                            
                             })}</div>:<div className="sweet-loading">
                             <ClipLoader
                               css={override}
@@ -157,19 +160,19 @@ export default class QuizInstruction extends Component {
                         <div className="row jumbotron inst">
                         <span className="left" style={{fontSize:"30px"}}><>Subjective Tests</></span><br/><br/>
                         <hr></hr>
-                          <div className="row">{this.state.subTest.map((test)=>{
+                          <div className="row" style={{display:'flex',flexDirection:'row', flexWrap:'wrap',margin:"1%"}}>{this.state.subTest.map((test)=>{
                               if(localStorage.getItem('hideSubAr')){
                                 var a=localStorage.getItem('hideSubAr').split(',')
                                 // console.log(a)
                                 if(a.includes(test)){
-                                    return <div className="col-md-3 col-xs-6 center" style={{padding:".5%"}} ><Link    ><button  className="btn btn-primary center"
+                                    return <div className="left" style={{padding:".5%"}} ><Link    ><button  className="btn btn-primary center"
                                     disabled={true}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideSubTest(test)}}></div>:null}<br/></div>}
                                 else{
-                                    return <div className="col-md-2 col-xs-6 center" style={{padding:".5%"}}><Link   to={Cookie.get('userInfo')?`/play/subQues/${test}`:'/login'} ><button  className="btn btn-primary center "
+                                    return <div className="left" style={{padding:".5%"}}><Link   to={Cookie.get('userInfo')?`/play/subQues/${test}`:'/login'} ><button  className="btn btn-primary center "
                                     disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideSubTest(test)}}></div>:null}<br/></div>
                                 }
                             }else{
-                                return <div className="col-md-2 col-xs-6 center " style={{padding:".5%"}}><Link   to={Cookie.get('userInfo')?`/play/subQues/${test}`:'/login'} ><button  className="btn btn-primary center"
+                                return <div className="left " style={{padding:".5%"}}><Link   to={Cookie.get('userInfo')?`/play/subQues/${test}`:'/login'} ><button  className="btn btn-primary center"
                                 disabled={false}>{test}</button></Link>{JSON.parse(Cookie.get('userInfo')).isAdmin?<div className="mdi mdi-eye" onClick={()=>{return this.hideSubTest(test)}}></div>:null}<br/></div>
                             }
                           })}</div></div>

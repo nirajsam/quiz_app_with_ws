@@ -6,7 +6,7 @@ var URL=cfg.URL
 
 export default function AddQuestion() {
     const [tName, settName] = useState("")
-    const [tTime, settTime] = useState(0)
+    const [tTime, settTime] = useState(1)
     const [question, setquestion] = useState("")
     const [optA, setoptA] = useState("")
     const [optB, setoptB] = useState("")
@@ -28,6 +28,14 @@ export default function AddQuestion() {
         "optionC":optC,"optionD":optD,"answer":answer}))
         
         setqArray(array)
+        settName('')
+        settTime('')
+        setquestion('')
+        setoptA('')
+        setoptB('')
+        setoptC('')
+        setoptD('')
+        setanswer('')
         
     }
 
@@ -66,18 +74,20 @@ export default function AddQuestion() {
         }
         
     }
-    
+    useEffect(()=>{
+        
+    },[qArray])
     return (
          <div className="row">
         <div className="col-md-9" style={{margin:"1% 0% 0% 0% "}}>
             <h2 className="text-center"><b>Add Questions</b></h2><Link to="/" ><button className="text-left">Back Home</button></Link>
             <br/><div className="col-md-5" >
                 <label htmlFor="testName" ><h5>testName:</h5></label>
-                <input type="text" name="testName" id="name" onChange={(e)=>settName(e.target.value)}></input>
+                <input type="text" name="testName" id="name" value={tName} onChange={(e)=>settName(e.target.value)}></input>
             </div>
             <div className="col-md-2" >
                 <label htmlFor="time" ><h5>testTime(in minutes):</h5></label>
-                <input type="number" name="time" id="time" onChange={(e)=>settTime(e.target.value)}></input>
+                <input type="number" name="time" id="time" value={tTime} onChange={(e)=>settTime(e.target.value)}></input>
             </div><br/>
             {/* <div className="col-md-8">
                 <div className="form-group col-md-5">
@@ -92,30 +102,30 @@ export default function AddQuestion() {
             </div> */}
             <div className="col-md-10">
                 <label htmlFor="question"><h5>Question:</h5></label>
-                <textarea type="text" name="question" id="name" onChange={(e)=>setquestion(e.target.value)}></textarea>
+                <textarea type="text" name="question" id="name" value={question} onChange={(e)=>setquestion(e.target.value)}></textarea>
             </div> 
             <br/>
             <div className="col-md-6">
             <li >
                 <label htmlFor="optA">optionA</label>
-                <input type="text" name="optA" id="name" onChange={(e)=>setoptA(e.target.value)}></input>
+                <input type="text" name="optA" id="name" value={optA} onChange={(e)=>setoptA(e.target.value)}></input>
             </li>
             <li >
                 <label htmlFor="optB">optionB</label>
-                <input type="text" name="optB" id="name" onChange={(e)=>setoptB(e.target.value)}></input>
+                <input type="text" name="optB" id="name" value={optB} onChange={(e)=>setoptB(e.target.value)}></input>
             </li>
             <li >
                 <label htmlFor="optC">optionC</label>
-                <input type="text" name="optC" id="name" onChange={(e)=>setoptC(e.target.value)}></input>
+                <input type="text" name="optC" id="name" value={optC} onChange={(e)=>setoptC(e.target.value)}></input>
             </li>
             <li >
                 <label htmlFor="optD">optionD</label>
-                <input type="text" name="optD" id="name" onChange={(e)=>setoptD(e.target.value)}></input>
+                <input type="text" name="optD" id="name" value={optD} onChange={(e)=>setoptD(e.target.value)}></input>
             </li>
             </div><br/>
             <div className="col-md-8">
                 <label htmlFor="answer"><h5>answer</h5></label>
-                <input type="text" name="answer" id="name" onChange={(e)=>setanswer(e.target.value)}></input>
+                <input type="text" name="answer" id="name" value={answer} onChange={(e)=>setanswer(e.target.value)}></input>
             </div>
             <div className="col-md-8">
                 <button type="button" className="btn btn-primary" onClick={addToArray}>add to array</button><br/><br/>
