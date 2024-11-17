@@ -1,6 +1,6 @@
 {
   "name": "my_quiz",
-  "proxy": "http://127.0.0.1:3000",
+  "proxy": "https://quiz-app-with-86yuvlz8x-nirajsams-projects.vercel.app",
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
