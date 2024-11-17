@@ -27,7 +27,13 @@ const cors=require('cors')
 const app=express();
 
 app.use(bodyParser.json())
-app.use(cors())
+const corsOptions = {
+    origin: ['https://curious-biscotti-240059.netlify.app/'], // Add your React app's domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+  };
+  
+  app.use(cors(corsOptions));
 // app.use(upload())
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
