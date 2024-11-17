@@ -28,7 +28,7 @@ const app=express();
 
 app.use(bodyParser.json())
 const corsOptions = {
-    origin: ['https://curious-biscotti-240059.netlify.app/'], // Add your React app's domain
+    origin: ['https://niraj-quiz-app-with-ai.netlify.app/'], // Add your React app's domain
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
   };
