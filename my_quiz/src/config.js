@@ -1,6 +1,6 @@
 
 module.exports={
-    URL: 'https://quiz-app-with-o0kyliraf-nirajsams-projects.vercel.app', 
+    URL: 'https://quiz-app-with-qej9120gj-nirajsams-projects.vercel.app', 
     // URL: 'http://localhost:5001'
     //  
 }

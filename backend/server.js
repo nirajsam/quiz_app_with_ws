@@ -24,15 +24,24 @@ mongoose.connect(mongodbUrl, {
 const cors=require('cors')
 const app=express();
 
-app.use(bodyParser.json())
 const corsOptions = {
-    origin: ['https://nirajsam-quiz-app-ai.netlify.app/'], // Add your React app's domain
+    origin: ['https://nirajsam-quiz-app-ai.netlify.app'], // Add your React app's domain
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
   };
   
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
+app.use(bodyParser.json())
 // app.use(upload())
+app.options('*', cors(corsOptions)); // Handle preflight requests
+app.options('*', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://nirajsam-quiz-app-ai.netlify.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.status(204).end(); // No content
+  });
+  
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/subQues", subQuesRoute);
